@@ -7,13 +7,15 @@ Added permutations_1000.npy and permutations_color_1000.npy for predefined permu
 Training without using unsupervised data:
 python3 tools/train.py --config_file extra_scripts/no_unsupervised.yaml
 
-Training with unsupervised data:
+Training with unsupervised data: \n
 python3 tools/train.py --config_file extra_scripts/unsupervised_vgg_a_jigsaw_stl_10.yaml
 python3 tools/train.py --config_file extra_scripts/unsupervised_vgg_a_jigsaw_color_stl_10.yaml
 
 Supervised finetuning:
 python3 tools/train.py --config_file extra_scripts/eval_vgg_a_jigsaw_stl_10.yaml
+
 python3 tools/train.py --config_file extra_scripts/eval_vgg_a_jigsaw-2_stl_10.yaml
+
 python3 tools/train.py --config_file extra_scripts/eval_vgg_a_jigsaw-3_stl_10.yaml
 python3 tools/train.py --config_file extra_scripts/eval_vgg_a_jigsaw_color1_head_layer1_stl_10.yaml
 python3 tools/train.py --config_file extra_scripts/eval_vgg_a_jigsaw_color1_head_layer2_stl_10.yaml
