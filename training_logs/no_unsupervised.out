@@ -1,0 +1,892 @@
+[INFO: config.py:  154]: Training with config:
+[INFO: config.py:  155]: {'CHECKPOINT': {'CHECKPOINT_PERIOD': 1,
+                'DIR': './checkpoint_no_unsupervised',
+                'FEATURE_EXTRACTOR_PARAMS': ''},
+ 'GPU_IDS': [],
+ 'MODEL': {'EVAL_FEATURES': [],
+           'FEATURE_EVAL_MODE': False,
+           'HEAD': {'APPLY_BATCHNORM': True,
+                    'BATCHNORM_EPS': 1e-05,
+                    'BATCHNORM_MOMENTUM': 0.1,
+                    'PARAMS': [['eval_mlp',
+                                {'dims': [4608, 10], 'in_channels': 512}]]},
+           'TRUNK': {'LINEAR_FEAT_POOL_OPS': [('AdaptiveMaxPool2d', [12]),
+                                              ('AdaptiveMaxPool2d', [7]),
+                                              ('AdaptiveMaxPool2d', [5]),
+                                              ('AdaptiveMaxPool2d', [6]),
+                                              ('AdaptiveMaxPool2d', [6])],
+                     'SHOULD_FLATTEN': False,
+                     'TYPE': 'vgg_a'}},
+ 'OPTIMIZER': {'BASE_LR': 0.01,
+               'DAMPENING': 0,
+               'MOMENTUM': 0.9,
+               'NESTEROV': True,
+               'REGULARIZE_BATCHNORM': False,
+               'REGULARIZE_BIAS': True,
+               'TYPE': 'sgd',
+               'WEIGHT_DECAY': 0.0001},
+ 'SCHEDULER': {'GAMMA': 0.1, 'STEP_SIZE': 30, 'TYPE': 'step'},
+ 'TEST': {'BATCH_SIZE': 16,
+          'DATA_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/test_images.npy'],
+          'DATA_SOURCES': ['disk'],
+          'DEFAULT_GRAY_IMG_SIZE': 64,
+          'EVERSTORE_RETRY': 3,
+          'LABEL_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/test_labels.npy'],
+          'LABEL_SOURCES': ['disk'],
+          'MMAP_MODE': True,
+          'TRANSFORMS': [['ToTensor'],
+                         ['Normalize',
+                          {'args': [[0.44671062, 0.43980984, 0.40664645],
+                                    [0.26034098, 0.25657727, 0.27126738]]}]]},
+ 'TRAIN': {'BATCH_SIZE': 16,
+           'DATA_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/train_images_0.npy'],
+           'DATA_SOURCES': ['disk'],
+           'DEFAULT_GRAY_IMG_SIZE': 64,
+           'EVERSTORE_RETRY': 3,
+           'LABEL_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/train_labels_0.npy'],
+           'LABEL_SOURCES': ['disk'],
+           'MMAP_MODE': True,
+           'TRANSFORMS': [['RandomHorizontalFlip'],
+                          ['ToTensor'],
+                          ['Normalize',
+                           {'args': [[0.44671062, 0.43980984, 0.40664645],
+                                     [0.26034098, 0.25657727, 0.27126738]]}]]},
+ 'TRAINER': {'AUTO_RESUME': True,
+             'CRITERION': 'cross_entropy_multiple_output_single_target',
+             'EVAL_LOOP': 'generic_eval_loop',
+             'EVAL_METERS': {'accuracy': {'topk': [1]}, 'loss': {}},
+             'EVAL_MODEL': True,
+             'EVAL_PERIOD': 1,
+             'LOG_ITER_PERIOD': 100,
+             'MAX_EPOCHS': 100,
+             'NUM_WORKERS': 40,
+             'RESET_START_EPOCH': False,
+             'TRAIN_LOOP': 'generic_train_loop',
+             'TRAIN_METERS': {'accuracy': {'topk': [1]}, 'loss': {}}},
+ 'VERBOSE': True}
+[INFO: generic_trainer.py:   48]: System config:
+PyTorch version: 1.3.1
+Is debug build: No
+CUDA used to build PyTorch: 10.1.243
+
+OS: CentOS Linux release 7.3.1611 (Core) 
+GCC version: (GCC) 4.8.5 20150623 (Red Hat 4.8.5-11)
+CMake version: Could not collect
+
+Python version: 3.6
+Is CUDA available: Yes
+CUDA runtime version: Could not collect
+GPU models and configuration: 
+GPU 0: Tesla K80
+GPU 1: Tesla K80
+GPU 2: Tesla K80
+GPU 3: Tesla K80
+
+Nvidia driver version: 418.39
+cuDNN version: Could not collect
+
+Versions of relevant libraries:
+[pip3] numpy==1.17.4
+[pip3] torch==1.3.1
+[pip3] torchvision==0.4.2
+[conda] Could not collect
+[INFO: __init__.py:   74]: SGD (
+Parameter Group 0
+    dampening: 0
+    lr: 0.01
+    momentum: 0.9
+    nesterov: True
+    weight_decay: 0.0001
+
+Parameter Group 1
+    dampening: 0
+    lr: 0.01
+    momentum: 0.9
+    nesterov: True
+    weight_decay: 0.0
+)
+[INFO: __init__.py:   75]: Traininable params: 36
+[INFO: __init__.py:   78]: Regularized Parameters: 18. Unregularized Parameters 18
+[INFO: generic_trainer.py:   55]: BaseImageSSLModel(
+  (trunk): VGG_A(
+    (_feature_blocks): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (2): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (4): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (5): Sequential(
+        (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (7): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (8): Sequential(
+        (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (10): Sequential(
+        (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (11): Sequential(
+        (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (12): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+  )
+  (clf_heads): ModuleList(
+    (0): Eval_MLP(
+      (channel_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=4608, out_features=10, bias=True)
+        )
+      )
+    )
+  )
+)
+use cuda
+[INFO: generic_trainer.py:  107]: => Training model...
+[INFO: generic_train_loop.py:   45]: Epoch: 1. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.1822916716337204}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.9552471955617268}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0001.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 1. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.24512499570846558}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8040780811309816}
+[INFO: utils.py:   91]: Epoch Time: 0:00:22.372990, ETA Time: 0:37:17.299013
+[INFO: generic_train_loop.py:   45]: Epoch: 2. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.24895833432674408}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 4.458677832285563}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0002.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 2. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.1928749978542328}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 14.493000885009765}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.211773, ETA Time: 0:31:00.445783
+[INFO: generic_train_loop.py:   45]: Epoch: 3. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.2874999940395355}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.8572822411855063}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0003.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 3. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.31462499499320984}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 5.39994659614563}
+[INFO: utils.py:   91]: Epoch Time: 0:00:14.998509, ETA Time: 0:28:37.720241
+[INFO: generic_train_loop.py:   45]: Epoch: 4. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.33020833134651184}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.0753629366556803}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0004.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 4. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.27399998903274536}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 9.357299270629882}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.057962, ETA Time: 0:27:44.549934
+[INFO: generic_train_loop.py:   45]: Epoch: 5. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.3843750059604645}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.861268949508667}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0005.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 5. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.320125013589859}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.738045217514038}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.246519, ETA Time: 0:26:50.644872
+[INFO: generic_train_loop.py:   45]: Epoch: 6. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.40312498807907104}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.6711822589238485}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0006.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 6. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.35737499594688416}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.757128053665161}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.070231, ETA Time: 0:26:06.834758
+[INFO: generic_train_loop.py:   45]: Epoch: 7. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.4000000059604645}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.6525813738505044}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0007.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 7. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.3499999940395355}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.9983084945678713}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.874436, ETA Time: 0:25:42.035362
+[INFO: generic_train_loop.py:   45]: Epoch: 8. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.40416666865348816}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.5943779786427816}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0008.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 8. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.33774998784065247}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 4.924487228393555}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.231905, ETA Time: 0:25:11.997790
+[INFO: generic_train_loop.py:   45]: Epoch: 9. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.4468750059604645}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.326846472422282}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0009.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 9. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.3551250100135803}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.392584547042847}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.096828, ETA Time: 0:24:43.869579
+[INFO: generic_train_loop.py:   45]: Epoch: 10. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.4802083373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9604979912439982}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0010.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 10. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.40625}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.2684136428833006}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.343789, ETA Time: 0:24:20.594987
+[INFO: generic_train_loop.py:   45]: Epoch: 11. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.515625}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.7023533503214519}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0011.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 11. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.43437498807907104}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.554478984832764}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.098459, ETA Time: 0:23:56.755110
+[INFO: generic_train_loop.py:   45]: Epoch: 12. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.5447916388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.6796422481536866}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0012.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 12. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.3941250145435333}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.5036546669006348}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.003130, ETA Time: 0:23:33.665115
+[INFO: generic_train_loop.py:   45]: Epoch: 13. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.565625011920929}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.4509923577308654}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0013.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 13. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.38324999809265137}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.820780511856079}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.163137, ETA Time: 0:23:12.902380
+[INFO: generic_train_loop.py:   45]: Epoch: 14. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.5979166626930237}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.3889843463897704}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0014.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 14. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.43687498569488525}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.5760565032958986}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.237196, ETA Time: 0:22:53.399810
+[INFO: generic_train_loop.py:   45]: Epoch: 15. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.621874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.3024486581484476}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0015.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 15. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4244999885559082}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.405319324493408}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.093599, ETA Time: 0:22:33.642664
+[INFO: generic_train_loop.py:   45]: Epoch: 16. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.671875}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.9952321251233419}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0016.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 16. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4166249930858612}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.1387951803207397}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.264131, ETA Time: 0:22:15.374416
+[INFO: generic_train_loop.py:   45]: Epoch: 17. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.6968749761581421}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.0427778363227844}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0017.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 17. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.46562498807907104}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.1303638372421263}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.080102, ETA Time: 0:21:56.550274
+[INFO: generic_train_loop.py:   45]: Epoch: 18. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.715624988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.9543414274851482}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0018.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 18. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4347499907016754}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.648900736808777}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.144747, ETA Time: 0:21:38.440220
+[INFO: generic_train_loop.py:   45]: Epoch: 19. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.7104166746139526}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.9226367791493734}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0019.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 19. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4557499885559082}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8412569398880003}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.335142, ETA Time: 0:21:21.464009
+[INFO: generic_train_loop.py:   45]: Epoch: 20. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.7760416865348816}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.7631068507830302}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0020.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 20. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4332500100135803}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8212310342788696}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.251327, ETA Time: 0:21:04.312453
+[INFO: generic_train_loop.py:   45]: Epoch: 21. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.7885416746139526}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.6647680719693502}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0021.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 21. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4468750059604645}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.092337537765503}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.016499, ETA Time: 0:20:46.447288
+[INFO: generic_train_loop.py:   45]: Epoch: 22. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.8114583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.5693591296672821}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0022.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 22. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4506250023841858}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.9702833843231202}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.201873, ETA Time: 0:20:29.506755
+[INFO: generic_train_loop.py:   45]: Epoch: 23. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.8125}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.5146480878194173}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0023.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 23. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4698750078678131}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.695452898979187}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.203468, ETA Time: 0:20:12.722820
+[INFO: generic_train_loop.py:   45]: Epoch: 24. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.8760416507720947}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.3505542864402135}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0024.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 24. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.46412500739097595}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8967099752426146}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.160269, ETA Time: 0:19:55.931994
+[INFO: generic_train_loop.py:   45]: Epoch: 25. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.890625}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.3323361799120903}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0025.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 25. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.48500001430511475}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.782040573120117}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.321564, ETA Time: 0:19:39.761947
+[INFO: generic_train_loop.py:   45]: Epoch: 26. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9156249761581421}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.2588547895352046}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0026.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 26. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4581249952316284}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.9619597845077514}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.897117, ETA Time: 0:19:25.317416
+[INFO: generic_train_loop.py:   45]: Epoch: 27. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9145833253860474}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.310774057606856}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0027.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 27. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.476624995470047}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.949644905090332}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.214946, ETA Time: 0:19:08.895634
+[INFO: generic_train_loop.py:   45]: Epoch: 28. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9156249761581421}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.29619571814934414}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0028.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 28. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4975000023841858}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.1588050937652588}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.168022, ETA Time: 0:18:52.437718
+[INFO: generic_train_loop.py:   45]: Epoch: 29. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9208333492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.23991605142752329}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0029.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 29. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4580000042915344}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.143352301597595}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.010102, ETA Time: 0:18:38.159442
+[INFO: generic_train_loop.py:   45]: Epoch: 30. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9322916865348816}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.20905600984891257}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0030.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 30. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.4737499952316284}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 3.035815267562866}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.000731, ETA Time: 0:18:21.376864
+[INFO: generic_train_loop.py:   45]: Epoch: 31. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9447916746139526}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.1501899485786756}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0031.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 31. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.49000000953674316}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.87474675655365}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.133206, ETA Time: 0:18:05.008382
+[INFO: generic_train_loop.py:   45]: Epoch: 32. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9822916388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.07478809257348379}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0032.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 32. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.49924999475479126}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8989811487197876}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.951420, ETA Time: 0:17:50.481379
+[INFO: generic_train_loop.py:   45]: Epoch: 33. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.987500011920929}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.056505012015501656}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0033.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 33. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5016250014305115}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8702271671295168}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.175582, ETA Time: 0:17:34.269351
+[INFO: generic_train_loop.py:   45]: Epoch: 34. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9906250238418579}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.046389975647131605}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0034.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 34. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5070000290870667}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.9061476259231567}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.279414, ETA Time: 0:17:18.322900
+[INFO: generic_train_loop.py:   45]: Epoch: 35. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9927083253860474}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.037412608663241066}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0035.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 35. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5095000267028809}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.9023806648254395}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.813578, ETA Time: 0:17:03.421846
+[INFO: generic_train_loop.py:   45]: Epoch: 36. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9958333373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.03287941962480545}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0036.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 36. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5092499852180481}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7239366817474364}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.109652, ETA Time: 0:16:47.199119
+[INFO: generic_train_loop.py:   45]: Epoch: 37. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9927083253860474}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.033276563386122386}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0037.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 37. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5067499876022339}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8123107242584227}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.510510, ETA Time: 0:16:31.729935
+[INFO: generic_train_loop.py:   45]: Epoch: 38. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9937499761581421}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.033392175038655596}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0038.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 38. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5055000185966492}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.721987557411194}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.907931, ETA Time: 0:16:16.917458
+[INFO: generic_train_loop.py:   45]: Epoch: 39. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9958333373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.031013692915439605}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0039.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 39. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5082499980926514}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7104867086410525}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.237270, ETA Time: 0:16:00.982625
+[INFO: generic_train_loop.py:   45]: Epoch: 40. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.02088822474082311}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0040.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 40. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5095000267028809}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.77586683177948}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.558936, ETA Time: 0:15:45.573210
+[INFO: generic_train_loop.py:   45]: Epoch: 41. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9958333373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.026470590631167093}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0041.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 41. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5121250152587891}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7308316679000852}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.986747, ETA Time: 0:15:30.782566
+[INFO: generic_train_loop.py:   45]: Epoch: 42. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.02545321484406789}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0042.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 42. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5115000009536743}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.69203688621521}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.203856, ETA Time: 0:15:14.835190
+[INFO: generic_train_loop.py:   45]: Epoch: 43. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.0197882870833079}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0043.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 43. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5138750076293945}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.6956228494644163}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.252480, ETA Time: 0:14:58.987981
+[INFO: generic_train_loop.py:   45]: Epoch: 44. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.02265068342288335}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0044.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 44. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5122500061988831}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7415236015319824}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.859552, ETA Time: 0:14:43.954240
+[INFO: generic_train_loop.py:   45]: Epoch: 45. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.02374557008345922}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0045.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 45. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.515375018119812}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.822646656036377}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.097076, ETA Time: 0:14:27.934937
+[INFO: generic_train_loop.py:   45]: Epoch: 46. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9947916865348816}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.029444400717814765}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0046.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 46. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5149999856948853}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.753850319862366}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.473454, ETA Time: 0:14:12.405748
+[INFO: generic_train_loop.py:   45]: Epoch: 47. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9937499761581421}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.02847488671541214}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0047.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 47. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5137500166893005}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7241610498428344}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.874668, ETA Time: 0:13:57.339900
+[INFO: generic_train_loop.py:   45]: Epoch: 48. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.018817491829395294}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0048.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 48. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5115000009536743}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7751230640411375}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.138352, ETA Time: 0:13:41.427336
+[INFO: generic_train_loop.py:   45]: Epoch: 49. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9958333373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.020356695353984832}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0049.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 49. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5103750228881836}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.906033420562744}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.316212, ETA Time: 0:13:25.735122
+[INFO: generic_train_loop.py:   45]: Epoch: 50. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.020024897158145906}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0050.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 50. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5132499933242798}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8429996728897096}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.892146, ETA Time: 0:13:10.645400
+[INFO: generic_train_loop.py:   45]: Epoch: 51. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01920973459879557}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0051.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 51. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.515999972820282}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7573224306106567}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.282154, ETA Time: 0:12:54.926180
+[INFO: generic_train_loop.py:   45]: Epoch: 52. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01752487669388453}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0052.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 52. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.515500009059906}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.789795163154602}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.429992, ETA Time: 0:12:39.363079
+[INFO: generic_train_loop.py:   45]: Epoch: 53. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01734565297762553}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0053.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 53. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.515749990940094}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.770174909591675}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.710944, ETA Time: 0:12:24.059448
+[INFO: generic_train_loop.py:   45]: Epoch: 54. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.020967140793800354}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0054.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 54. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.512499988079071}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.705392373085022}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.268650, ETA Time: 0:12:08.355771
+[INFO: generic_train_loop.py:   45]: Epoch: 55. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.014775487780570983}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0055.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 55. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5117499828338623}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.827547801017761}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.219645, ETA Time: 0:11:52.626927
+[INFO: generic_train_loop.py:   45]: Epoch: 56. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.016594289739926656}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0056.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 56. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5149999856948853}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8075122804641723}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.137993, ETA Time: 0:11:36.850656
+[INFO: generic_train_loop.py:   45]: Epoch: 57. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.996874988079071}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.016030019025007884}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0057.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 57. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5115000009536743}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8235855236053466}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.283740, ETA Time: 0:11:21.209287
+[INFO: generic_train_loop.py:   45]: Epoch: 58. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011998507380485534}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0058.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 58. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5120000243186951}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7549716949462892}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.280303, ETA Time: 0:11:05.577702
+[INFO: generic_train_loop.py:   45]: Epoch: 59. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01424530694882075}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0059.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 59. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5115000009536743}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.806554946899414}
+[INFO: utils.py:   91]: Epoch Time: 0:00:14.966526, ETA Time: 0:10:49.734659
+[INFO: generic_train_loop.py:   45]: Epoch: 60. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.013085205852985383}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0060.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 60. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5109999775886536}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.779208094596863}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.195734, ETA Time: 0:10:34.077458
+[INFO: generic_train_loop.py:   45]: Epoch: 61. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.012488457063833872}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0061.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 61. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5117499828338623}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7854666786193847}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.278508, ETA Time: 0:10:18.489665
+[INFO: generic_train_loop.py:   45]: Epoch: 62. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.009301668405532837}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0062.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 62. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5091249942779541}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.784086696624756}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.107201, ETA Time: 0:10:02.804092
+[INFO: generic_train_loop.py:   45]: Epoch: 63. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01111177404721578}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0063.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 63. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.512374997138977}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8114155445098876}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.196333, ETA Time: 0:09:47.190641
+[INFO: generic_train_loop.py:   45]: Epoch: 64. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.013309297959009807}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0064.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 64. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.512374997138977}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8109507598876955}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.323328, ETA Time: 0:09:31.663644
+[INFO: generic_train_loop.py:   45]: Epoch: 65. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011080153286457062}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0065.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 65. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5127500295639038}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.770345802307129}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.176591, ETA Time: 0:09:16.061645
+[INFO: generic_train_loop.py:   45]: Epoch: 66. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011898788809776305}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0066.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 66. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5143749713897705}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.80751353263855}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.275384, ETA Time: 0:09:00.524927
+[INFO: generic_train_loop.py:   45]: Epoch: 67. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01524477501710256}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0067.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 67. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5105000138282776}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.796643545150757}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.242698, ETA Time: 0:08:44.979423
+[INFO: generic_train_loop.py:   45]: Epoch: 68. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.012819941093524297}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0068.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 68. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.512374997138977}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7490196619033815}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.042126, ETA Time: 0:08:29.345489
+[INFO: generic_train_loop.py:   45]: Epoch: 69. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.013199031352996826}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0069.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 69. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5143749713897705}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7588745937347414}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.013792, ETA Time: 0:08:13.715568
+[INFO: generic_train_loop.py:   45]: Epoch: 70. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011009287834167481}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0070.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 70. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5146250128746033}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8258373889923094}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.417600, ETA Time: 0:07:58.282080
+[INFO: generic_train_loop.py:   45]: Epoch: 71. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.010297823945681255}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0071.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 71. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5133749842643738}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.766387568473816}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.051809, ETA Time: 0:07:42.694480
+[INFO: generic_train_loop.py:   45]: Epoch: 72. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011232182880242665}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0072.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 72. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5139999985694885}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7556332635879515}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.226725, ETA Time: 0:07:27.192215
+[INFO: generic_train_loop.py:   45]: Epoch: 73. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.009585367639859517}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0073.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 73. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5148749947547913}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8115518531799317}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.333470, ETA Time: 0:07:11.738443
+[INFO: generic_train_loop.py:   45]: Epoch: 74. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.013196556270122528}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0074.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 74. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.512624979019165}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.826386161804199}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.221766, ETA Time: 0:06:56.247165
+[INFO: generic_train_loop.py:   45]: Epoch: 75. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.010672918458779653}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0075.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 75. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.515749990940094}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7430851850509645}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.951838, ETA Time: 0:06:41.016166
+[INFO: generic_train_loop.py:   45]: Epoch: 76. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.010874954362710318}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0076.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 76. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5137500166893005}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7129228982925415}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.361673, ETA Time: 0:06:25.572064
+[INFO: generic_train_loop.py:   45]: Epoch: 77. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.009676301976044972}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0077.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 77. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5120000243186951}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7726096324920655}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.043613, ETA Time: 0:06:10.030968
+[INFO: generic_train_loop.py:   45]: Epoch: 78. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01694933374722799}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0078.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 78. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5098749995231628}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.712740469932556}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.154448, ETA Time: 0:05:54.830181
+[INFO: generic_train_loop.py:   45]: Epoch: 79. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.016578722993532816}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0079.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 79. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5141249895095825}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7413308906555174}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.384059, ETA Time: 0:05:39.390712
+[INFO: generic_train_loop.py:   45]: Epoch: 80. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9958333373069763}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.023216544091701506}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0080.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 80. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5130000114440918}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7843817052841184}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.120769, ETA Time: 0:05:23.883515
+[INFO: generic_train_loop.py:   45]: Epoch: 81. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011579955120881398}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0081.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 81. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5116249918937683}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.761246929168701}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.933190, ETA Time: 0:05:08.586458
+[INFO: generic_train_loop.py:   45]: Epoch: 82. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.011707361539204915}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0082.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 82. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5111250281333923}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7887059993743897}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.456315, ETA Time: 0:04:53.163389
+[INFO: generic_train_loop.py:   45]: Epoch: 83. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.009376839796702067}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0083.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 83. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5109999775886536}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8164746589660643}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.125124, ETA Time: 0:04:37.667695
+[INFO: generic_train_loop.py:   45]: Epoch: 84. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.01827366550763448}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0084.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 84. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5148749947547913}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.781447793960571}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.479206, ETA Time: 0:04:22.252483
+[INFO: generic_train_loop.py:   45]: Epoch: 85. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.010922843714555104}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0085.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 85. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5161250233650208}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8433883571624756}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.471008, ETA Time: 0:04:06.834222
+[INFO: generic_train_loop.py:   45]: Epoch: 86. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.010494127869606018}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0086.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 86. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5138750076293945}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.838296875}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.242598, ETA Time: 0:03:51.374896
+[INFO: generic_train_loop.py:   45]: Epoch: 87. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.013137070337931316}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0087.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 87. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5128750205039978}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.764744183540344}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.031937, ETA Time: 0:03:35.886653
+[INFO: generic_train_loop.py:   45]: Epoch: 88. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9979166388511658}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.016423194110393523}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0088.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 88. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5149999856948853}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.8442827749252317}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.228840, ETA Time: 0:03:20.585595
+[INFO: generic_train_loop.py:   45]: Epoch: 89. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 1.0}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.00936470776796341}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0089.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 89. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5142499804496765}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.7663821363449097}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.236561, ETA Time: 0:03:05.129898
+[INFO: generic_train_loop.py:   45]: Epoch: 90. Train Stats
+[INFO: generic_train_loop.py:   47]: {'name': 'accuracy', 'value': {'top_1': 0.9989583492279053}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 0.012325374285380046}
+[INFO: checkpoint.py:   79]: Saved checkpoint: ./checkpoint_no_unsupervised/model_epoch_0090.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 90. Validation Stats
+[INFO: generic_eval_loop.py:   37]: {'name': 'accuracy', 'value': {'top_1': 0.5141249895095825}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 2.794072669029236}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.219242, ETA Time: 0:02:49.676954

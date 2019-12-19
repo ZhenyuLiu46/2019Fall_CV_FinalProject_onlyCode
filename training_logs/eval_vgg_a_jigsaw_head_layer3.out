@@ -1,0 +1,2545 @@
+[INFO: config.py:  154]: Training with config:
+[INFO: config.py:  155]: {'CHECKPOINT': {'CHECKPOINT_PERIOD': 1,
+                'DIR': 'checkpoint_supervised_training_eval_vgg_a_jigsaw-3',
+                'FEATURE_EXTRACTOR_PARAMS': './checkpoint_unsupervised_jigsaw_vgg_a_training/model_epoch_0030.pyth'},
+ 'GPU_IDS': [],
+ 'MODEL': {'EVAL_FEATURES': ['pool1', 'pool2', 'pool3', 'pool4', 'pool5'],
+           'FEATURE_EVAL_MODE': True,
+           'HEAD': {'APPLY_BATCHNORM': True,
+                    'BATCHNORM_EPS': 1e-05,
+                    'BATCHNORM_MOMENTUM': 0.1,
+                    'PARAMS': [['eval_mlp',
+                                {'dims': [6400, 640, 64, 10],
+                                 'in_channels': 64}],
+                               ['eval_mlp',
+                                {'dims': [3200, 320, 64, 10],
+                                 'in_channels': 128}],
+                               ['eval_mlp',
+                                {'dims': [1024, 128, 32, 10],
+                                 'in_channels': 256}],
+                               ['eval_mlp',
+                                {'dims': [2048, 128, 32, 10],
+                                 'in_channels': 512}],
+                               ['eval_mlp',
+                                {'dims': [512, 128, 32, 10],
+                                 'in_channels': 512}]]},
+           'TRUNK': {'LINEAR_FEAT_POOL_OPS': [['AvgPool2d', [[5, 5], 5, 2]],
+                                              ['AvgPool2d', [[8, 8], 4, 1]],
+                                              ['AvgPool2d', [[7, 7], 3, 0]],
+                                              ['AvgPool2d', [[4, 4], 2, 0]],
+                                              ['AvgPool2d', [[3, 3], 1, 0]]],
+                     'SHOULD_FLATTEN': False,
+                     'TYPE': 'vgg_a'}},
+ 'OPTIMIZER': {'BASE_LR': 0.01,
+               'DAMPENING': 0,
+               'MOMENTUM': 0.9,
+               'NESTEROV': True,
+               'REGULARIZE_BATCHNORM': False,
+               'REGULARIZE_BIAS': True,
+               'TYPE': 'sgd',
+               'WEIGHT_DECAY': 0.0005},
+ 'SCHEDULER': {'GAMMA': 0.1, 'STEP_SIZE': 30, 'TYPE': 'step'},
+ 'TEST': {'BATCH_SIZE': 32,
+          'DATA_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/test_images.npy'],
+          'DATA_SOURCES': ['disk'],
+          'DEFAULT_GRAY_IMG_SIZE': 96,
+          'EVERSTORE_RETRY': 3,
+          'LABEL_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/test_labels.npy'],
+          'LABEL_SOURCES': ['disk'],
+          'MMAP_MODE': True,
+          'TRANSFORMS': [['ToTensor'],
+                         ['Normalize',
+                          {'args': [[0.44671062, 0.43980984, 0.40664645],
+                                    [0.26034098, 0.25657727, 0.27126738]]}]]},
+ 'TRAIN': {'BATCH_SIZE': 64,
+           'DATA_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/train_images_0.npy'],
+           'DATA_SOURCES': ['disk'],
+           'DEFAULT_GRAY_IMG_SIZE': 96,
+           'EVERSTORE_RETRY': 3,
+           'LABEL_PATHS': ['/scratch/rs6565/cv_project/fair-sslime/data/train_labels_0.npy'],
+           'LABEL_SOURCES': ['disk'],
+           'MMAP_MODE': True,
+           'TRANSFORMS': [['ToTensor'],
+                          ['Normalize',
+                           {'args': [[0.44671062, 0.43980984, 0.40664645],
+                                     [0.26034098, 0.25657727, 0.27126738]]}]]},
+ 'TRAINER': {'AUTO_RESUME': True,
+             'CRITERION': 'cross_entropy_multiple_output_single_target',
+             'EVAL_LOOP': 'generic_eval_loop',
+             'EVAL_METERS': {'accuracy_list': {'num_list': 5, 'topk': [1]},
+                             'loss': {}},
+             'EVAL_MODEL': True,
+             'EVAL_PERIOD': 1,
+             'LOG_ITER_PERIOD': 100,
+             'MAX_EPOCHS': 120,
+             'NUM_WORKERS': 45,
+             'RESET_START_EPOCH': False,
+             'TRAIN_LOOP': 'generic_train_loop',
+             'TRAIN_METERS': {'accuracy_list': {'num_list': 5, 'topk': [1]},
+                              'loss': {}}},
+ 'VERBOSE': True}
+[INFO: generic_trainer.py:   48]: System config:
+PyTorch version: 1.3.1
+Is debug build: No
+CUDA used to build PyTorch: 10.1.243
+
+OS: CentOS Linux release 7.3.1611 (Core) 
+GCC version: (GCC) 4.8.5 20150623 (Red Hat 4.8.5-11)
+CMake version: Could not collect
+
+Python version: 3.6
+Is CUDA available: Yes
+CUDA runtime version: Could not collect
+GPU models and configuration: 
+GPU 0: Tesla K80
+GPU 1: Tesla K80
+GPU 2: Tesla K80
+GPU 3: Tesla K80
+
+Nvidia driver version: 418.39
+cuDNN version: Could not collect
+
+Versions of relevant libraries:
+[pip3] numpy==1.17.4
+[pip3] torch==1.3.1
+[pip3] torchvision==0.4.2
+[conda] Could not collect
+[INFO: feature_extractor.py:   44]: Checkpoint loaded from: ./checkpoint_unsupervised_jigsaw_vgg_a_training/model_epoch_0030.pyth
+[INFO: __init__.py:   74]: SGD (
+Parameter Group 0
+    dampening: 0
+    lr: 0.01
+    momentum: 0.9
+    nesterov: True
+    weight_decay: 0.0005
+
+Parameter Group 1
+    dampening: 0
+    lr: 0.01
+    momentum: 0.9
+    nesterov: True
+    weight_decay: 0.0
+)
+[INFO: __init__.py:   75]: Traininable params: 60
+[INFO: __init__.py:   78]: Regularized Parameters: 30. Unregularized Parameters 30
+[INFO: generic_trainer.py:   55]: BaseImageSSLModel(
+  (trunk): FeatureExtractorModel(
+    (base_model): VGG_A(
+      (_feature_blocks): ModuleList(
+        (0): Sequential(
+          (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (1): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (2): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (4): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (5): Sequential(
+          (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (6): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (7): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (8): Sequential(
+          (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (10): Sequential(
+          (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (11): Sequential(
+          (0): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+        (12): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+    )
+    (feature_pool_ops): ModuleList(
+      (0): AvgPool2d(kernel_size=[5, 5], stride=5, padding=2)
+      (1): AvgPool2d(kernel_size=[8, 8], stride=4, padding=1)
+      (2): AvgPool2d(kernel_size=[7, 7], stride=3, padding=0)
+      (3): AvgPool2d(kernel_size=[4, 4], stride=2, padding=0)
+      (4): AvgPool2d(kernel_size=[3, 3], stride=1, padding=0)
+    )
+  )
+  (clf_heads): ModuleList(
+    (0): Eval_MLP(
+      (channel_bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=6400, out_features=640, bias=True)
+          (1): BatchNorm1d(640, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Linear(in_features=640, out_features=64, bias=True)
+          (4): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+          (6): Linear(in_features=64, out_features=10, bias=True)
+        )
+      )
+    )
+    (1): Eval_MLP(
+      (channel_bn): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=3200, out_features=320, bias=True)
+          (1): BatchNorm1d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Linear(in_features=320, out_features=64, bias=True)
+          (4): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+          (6): Linear(in_features=64, out_features=10, bias=True)
+        )
+      )
+    )
+    (2): Eval_MLP(
+      (channel_bn): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=1024, out_features=128, bias=True)
+          (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Linear(in_features=128, out_features=32, bias=True)
+          (4): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+          (6): Linear(in_features=32, out_features=10, bias=True)
+        )
+      )
+    )
+    (3): Eval_MLP(
+      (channel_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=2048, out_features=128, bias=True)
+          (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Linear(in_features=128, out_features=32, bias=True)
+          (4): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+          (6): Linear(in_features=32, out_features=10, bias=True)
+        )
+      )
+    )
+    (4): Eval_MLP(
+      (channel_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (clf): MLP(
+        (clf): Sequential(
+          (0): Linear(in_features=512, out_features=128, bias=True)
+          (1): BatchNorm1d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+          (3): Linear(in_features=128, out_features=32, bias=True)
+          (4): BatchNorm1d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (5): ReLU(inplace=True)
+          (6): Linear(in_features=32, out_features=10, bias=True)
+        )
+      )
+    )
+  )
+)
+use cuda
+[INFO: generic_trainer.py:  107]: => Training model...
+[INFO: generic_train_loop.py:   45]: Epoch: 1. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 0.203125}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.203125}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.1692708283662796}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.1666666716337204}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.1510416716337204}},
+             'top_1': '20.3,20.3,16.9,16.7,15.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 11.138245900472006}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0001.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 1. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.2138356864452362}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.14339718222618103}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.17023690044879913}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.14314515888690948}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.11189515888690948}},
+             'top_1': '21.4,14.3,17.0,14.3,11.2'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 11.34795041238108}
+[INFO: utils.py:   91]: Epoch Time: 0:00:20.135310, ETA Time: 0:40:16.237221
+[INFO: generic_train_loop.py:   45]: Epoch: 2. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4401041567325592}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3854166567325592}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.27734375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3151041567325592}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.2434895783662796}},
+             'top_1': '44.0,38.5,27.7,31.5,24.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 9.827178637186686}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0002.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 2. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.32006049156188965}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.28830644488334656}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.2392893135547638}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.21988406777381897}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.17174899578094482}},
+             'top_1': '32.0,28.8,23.9,22.0,17.2'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 11.059112518064437}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.261949, ETA Time: 0:36:05.636925
+[INFO: generic_train_loop.py:   45]: Epoch: 3. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5911458134651184}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.47265625}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3229166567325592}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3684895932674408}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.26171875}},
+             'top_1': '59.1,47.3,32.3,36.8,26.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 9.15482234954834}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0003.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 3. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3870967626571655}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3661794364452362}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.26789313554763794}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.27457156777381897}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.203125}},
+             'top_1': '38.7,36.6,26.8,27.5,20.3'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 10.717289278584142}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.452255, ETA Time: 0:33:59.414236
+[INFO: generic_train_loop.py:   45]: Epoch: 4. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6666666865348816}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5403645634651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3736979067325592}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3932291567325592}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.27734375}},
+             'top_1': '66.7,54.0,37.4,39.3,27.7'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 8.702307065327963}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0004.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 4. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4214969873428345}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39528730511665344}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3009072542190552}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3121219873428345}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.21837197244167328}},
+             'top_1': '42.1,39.5,30.1,31.2,21.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 10.36650005463631}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.408718, ETA Time: 0:32:47.303303
+[INFO: generic_train_loop.py:   45]: Epoch: 5. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 0.75390625}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6171875}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.3984375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4309895932674408}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.2994791567325592}},
+             'top_1': '75.4,61.7,39.8,43.1,29.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 8.244503021240234}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0005.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 5. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4443044364452362}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4272933602333069}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3360635042190552}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3491683602333069}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.23563508689403534}},
+             'top_1': '44.4,42.7,33.6,34.9,23.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 10.028074526017711}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.911139, ETA Time: 0:32:09.529416
+[INFO: generic_train_loop.py:   45]: Epoch: 6. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8033854365348816}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.671875}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.4453125}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4401041567325592}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.32421875}},
+             'top_1': '80.3,67.2,44.5,44.0,32.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 7.959259668986003}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0006.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 6. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4550151228904724}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4639616906642914}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.37046369910240173}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.37563005089759827}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.2578125}},
+             'top_1': '45.5,46.4,37.0,37.6,25.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 9.71926913722869}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.518641, ETA Time: 0:31:31.520241
+[INFO: generic_train_loop.py:   45]: Epoch: 7. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8463541865348816}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.703125}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4700520932674408}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.4921875}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3294270932674408}},
+             'top_1': '84.6,70.3,47.0,49.2,32.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 7.562517960866292}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0007.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 7. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4701360762119293}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49004536867141724}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40448588132858276}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39906755089759827}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.26953125}},
+             'top_1': '47.0,49.0,40.4,39.9,27.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 9.425641290603146}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.079115, ETA Time: 0:31:09.064652
+[INFO: generic_train_loop.py:   45]: Epoch: 8. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8971354365348816}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7643229365348816}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5130208134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5377604365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3567708432674408}},
+             'top_1': '89.7,76.4,51.3,53.8,35.7'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 7.1488362948099775}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0008.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 8. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4760584533214569}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5127268433570862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4295614957809448}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.41910281777381897}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.28881049156188965}},
+             'top_1': '47.6,51.3,43.0,41.9,28.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 9.138339796373922}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.179536, ETA Time: 0:30:49.621630
+[INFO: generic_train_loop.py:   45]: Epoch: 9. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9166666865348816}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.78515625}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5494791865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5559895634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3776041567325592}},
+             'top_1': '91.7,78.5,54.9,55.6,37.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 6.760232289632161}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0009.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 9. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.48412299156188965}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5277217626571655}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4473286271095276}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4298135042190552}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3101058602333069}},
+             'top_1': '48.4,52.8,44.7,43.0,31.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 8.88004396807763}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.614809, ETA Time: 0:30:23.876110
+[INFO: generic_train_loop.py:   45]: Epoch: 10. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9388020634651184}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8229166865348816}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5572916865348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.5546875}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4010416567325592}},
+             'top_1': '93.9,82.3,55.7,55.5,40.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 6.483164151509603}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0010.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 10. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.48891130089759827}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5357862710952759}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.46597781777381897}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4463205635547638}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3243447542190552}},
+             'top_1': '48.9,53.6,46.6,44.6,32.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 8.651613281619165}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.395178, ETA Time: 0:30:08.818826
+[INFO: generic_train_loop.py:   45]: Epoch: 11. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9596354365348816}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.83203125}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5794270634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5885416865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.3919270932674408}},
+             'top_1': '96.0,83.2,57.9,58.9,39.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 6.148570378621419}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0011.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 11. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49294355511665344}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4848790466785431}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.46156755089759827}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.33467742800712585}},
+             'top_1': '49.3,54.8,48.5,46.2,33.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 8.426425749255765}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.519372, ETA Time: 0:29:54.760232
+[INFO: generic_train_loop.py:   45]: Epoch: 12. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9739583134651184}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8684895634651184}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.59765625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5950520634651184}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.390625}},
+             'top_1': '97.4,86.8,59.8,59.5,39.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 5.839443524678548}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0012.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 12. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49344757199287415}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5569556355476379}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4964717626571655}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.46408769488334656}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3461441397666931}},
+             'top_1': '49.3,55.7,49.6,46.4,34.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 8.229223297488305}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.330345, ETA Time: 0:29:38.574510
+[INFO: generic_train_loop.py:   45]: Epoch: 13. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9895833134651184}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9114583134651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6432291865348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6328125}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4192708432674408}},
+             'top_1': '99.0,91.1,64.3,63.3,41.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 5.518622398376465}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0013.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 13. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4957157373428345}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5603578686714172}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49584174156188965}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.47442036867141724}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3564768135547638}},
+             'top_1': '49.6,56.0,49.6,47.4,35.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 8.045983099168346}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.497238, ETA Time: 0:29:23.753037
+[INFO: generic_train_loop.py:   45]: Epoch: 14. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 0.984375}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9088541865348816}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6354166865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6471354365348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.41796875}},
+             'top_1': '98.4,90.9,63.5,64.7,41.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 5.332544803619385}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0014.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 14. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4989919364452362}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5666582584381104}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5023941397666931}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4722782373428345}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3607610762119293}},
+             'top_1': '49.9,56.7,50.2,47.2,36.1'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.915163486234603}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.649076, ETA Time: 0:29:09.852645
+[INFO: generic_train_loop.py:   45]: Epoch: 15. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 0.98828125}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9388020634651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6666666865348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6953125}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4440104067325592}},
+             'top_1': '98.8,93.9,66.7,69.5,44.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 5.004021326700847}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0015.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 15. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4965977966785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5700604915618896}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5105846524238586}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.46118950843811035}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.37184980511665344}},
+             'top_1': '49.7,57.0,51.1,46.1,37.2'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.788440727418469}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.649606, ETA Time: 0:28:48.522840
+[INFO: generic_train_loop.py:   45]: Epoch: 16. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9947916865348816}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.953125}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6848958134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.69140625}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4739583432674408}},
+             'top_1': '99.5,95.3,68.5,69.1,47.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 4.80762513478597}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0016.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 16. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49281755089759827}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5660282373428345}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.516381025314331}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4644657373428345}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.3671875}},
+             'top_1': '49.3,56.6,51.6,46.4,36.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.6797234550599125}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.417464, ETA Time: 0:28:32.942129
+[INFO: generic_train_loop.py:   45]: Epoch: 17. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9973958134651184}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9609375}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7096354365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7018229365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4635416567325592}},
+             'top_1': '99.7,96.1,71.0,70.2,46.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 4.5550564130147295}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0017.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 17. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49243950843811035}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5719506144523621}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5245715975761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.47782257199287415}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.37222781777381897}},
+             'top_1': '49.2,57.2,52.5,47.8,37.2'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.554453296046103}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.831705, ETA Time: 0:28:13.679510
+[INFO: generic_train_loop.py:   45]: Epoch: 18. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7486979365348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.734375}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.47265625}},
+             'top_1': '100.0,97.8,74.9,73.4,47.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 4.2930402755737305}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0018.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 18. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4908014237880707}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5720766186714172}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5245715975761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4746723771095276}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3896169364452362}},
+             'top_1': '49.1,57.2,52.5,47.5,39.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.4661970907642}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.510946, ETA Time: 0:27:52.962648
+[INFO: generic_train_loop.py:   45]: Epoch: 19. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7565104365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7682291865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.4934895932674408}},
+             'top_1': '100.0,98.2,75.7,76.8,49.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 4.1101311047871905}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0019.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 19. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4911794364452362}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5757308602333069}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5259576439857483}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4853830635547638}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39327117800712585}},
+             'top_1': '49.1,57.6,52.6,48.5,39.3'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.374525370136384}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.412192, ETA Time: 0:27:32.263622
+[INFO: generic_train_loop.py:   45]: Epoch: 20. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9895833134651184}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7799479365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7317708134651184}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.484375}},
+             'top_1': '100.0,99.0,78.0,73.2,48.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.95478892326355}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0020.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 20. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4920614957809448}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5769909024238586}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5259576439857483}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49332156777381897}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39390119910240173}},
+             'top_1': '49.2,57.7,52.6,49.3,39.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.309173507075156}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.625161, ETA Time: 0:27:13.168772
+[INFO: generic_train_loop.py:   45]: Epoch: 21. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9947916865348816}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7916666865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7786458134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5091145634651184}},
+             'top_1': '100.0,99.5,79.2,77.9,50.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.7764035860697427}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0021.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 21. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4931955635547638}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.578881025314331}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5362903475761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.47631049156188965}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39768144488334656}},
+             'top_1': '49.3,57.9,53.6,47.6,39.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.264740882381316}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.725279, ETA Time: 0:26:54.881124
+[INFO: generic_train_loop.py:   45]: Epoch: 22. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.99609375}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8177083134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8059895634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5182291865348816}},
+             'top_1': '100.0,99.6,81.8,80.6,51.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.5781083901723227}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0022.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 22. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4947076737880707}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5735887289047241}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5336441397666931}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.47492438554763794}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39377519488334656}},
+             'top_1': '49.5,57.4,53.4,47.5,39.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.240204918769098}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.785208, ETA Time: 0:26:37.096097
+[INFO: generic_train_loop.py:   45]: Epoch: 23. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 0.99609375}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8216145634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7955729365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5182291865348816}},
+             'top_1': '100.0,99.6,82.2,79.6,51.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.458284854888916}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0023.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 23. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4926915466785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5740927457809448}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5337701439857483}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.48172882199287415}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40007561445236206}},
+             'top_1': '49.3,57.4,53.4,48.2,40.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.187112562118038}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.248963, ETA Time: 0:26:17.200099
+[INFO: generic_train_loop.py:   45]: Epoch: 24. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.8515625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8216145634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5208333134651184}},
+             'top_1': '100.0,100.0,85.2,82.2,52.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.303160031636556}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0024.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 24. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4947076737880707}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5758568644523621}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5315020084381104}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4996219873428345}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.3955393135547638}},
+             'top_1': '49.5,57.6,53.2,50.0,39.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.149072485585367}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.388010, ETA Time: 0:25:58.253336
+[INFO: generic_train_loop.py:   45]: Epoch: 25. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8567708134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8541666865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5091145634651184}},
+             'top_1': '100.0,100.0,85.7,85.4,50.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 3.181916077931722}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0025.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 25. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.49609375}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5806451439857483}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5401965975761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4957157373428345}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.39566531777381897}},
+             'top_1': '49.6,58.1,54.0,49.6,39.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.111544539851527}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.078314, ETA Time: 0:25:42.242038
+[INFO: generic_train_loop.py:   45]: Epoch: 26. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9986979365348816}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.88671875}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8658854365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5520833134651184}},
+             'top_1': '100.0,99.9,88.7,86.6,55.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.976144234339396}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0026.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 26. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4965977966785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5743447542190552}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5374243855476379}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4863911271095276}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40448588132858276}},
+             'top_1': '49.7,57.4,53.7,48.6,40.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.1097290131353565}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.555759, ETA Time: 0:25:27.970098
+[INFO: generic_train_loop.py:   45]: Epoch: 27. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.87109375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8072916865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5260416865348816}},
+             'top_1': '100.0,100.0,87.1,80.7,52.6'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.999636093775431}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0027.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 27. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4936996102333069}},
+             1: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.57421875}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5360382795333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4853830635547638}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40461188554763794}},
+             'top_1': '49.4,57.4,53.6,48.5,40.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.10908200663905}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.157094, ETA Time: 0:25:12.141041
+[INFO: generic_train_loop.py:   45]: Epoch: 28. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9049479365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8424479365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5690104365348816}},
+             'top_1': '100.0,100.0,90.5,84.2,56.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.8187594413757324}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0028.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 28. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.49609375}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.571068525314331}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5407006144523621}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4608114957809448}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40851813554763794}},
+             'top_1': '49.6,57.1,54.1,46.1,40.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.177014604691537}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.321591, ETA Time: 0:24:56.834917
+[INFO: generic_train_loop.py:   45]: Epoch: 29. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9140625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8776041865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5807291865348816}},
+             'top_1': '100.0,100.0,91.4,87.8,58.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.7045024236043296}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0029.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 29. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4935735762119293}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5738407373428345}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5313760042190552}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4902973771095276}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.40120968222618103}},
+             'top_1': '49.4,57.4,53.1,49.0,40.1'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.108827167941678}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.783240, ETA Time: 0:24:42.923302
+[INFO: generic_train_loop.py:   45]: Epoch: 30. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8958333134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.8958333134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.5638020634651184}},
+             'top_1': '100.0,100.0,89.6,89.6,56.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.637176195780436}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0030.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 30. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49281755089759827}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5757308602333069}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5374243855476379}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4935735762119293}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4125503897666931}},
+             'top_1': '49.3,57.6,53.7,49.4,41.3'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.094496673153293}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.466931, ETA Time: 0:24:27.860775
+[INFO: generic_train_loop.py:   45]: Epoch: 31. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9375}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.91015625}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.625}},
+             'top_1': '100.0,100.0,93.8,91.0,62.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.4135453701019287}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0031.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 31. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4931955635547638}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5754788517951965}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5434727668762207}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5090726017951965}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4149445593357086}},
+             'top_1': '49.3,57.5,54.3,50.9,41.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.0282515864218436}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.490332, ETA Time: 0:24:12.775580
+[INFO: generic_train_loop.py:   45]: Epoch: 32. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9505208134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9205729365348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.625}},
+             'top_1': '100.0,100.0,95.1,92.1,62.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.332897901535034}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0032.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 32. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4942036271095276}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5740927457809448}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5452368855476379}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5090726017951965}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4184727966785431}},
+             'top_1': '49.4,57.4,54.5,50.9,41.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.012140681666713}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.661803, ETA Time: 0:23:58.079469
+[INFO: generic_train_loop.py:   45]: Epoch: 33. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.94921875}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9309895634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6028645634651184}},
+             'top_1': '100.0,100.0,94.9,93.1,60.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.3261094093322754}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0033.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 33. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4965977966785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5732106566429138}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5423387289047241}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5118447542190552}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.41960686445236206}},
+             'top_1': '49.7,57.3,54.2,51.2,42.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.004409128619779}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.302041, ETA Time: 0:23:42.304859
+[INFO: generic_train_loop.py:   45]: Epoch: 34. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9518229365348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.94140625}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6223958134651184}},
+             'top_1': '100.0,100.0,95.2,94.1,62.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.2490289211273193}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0034.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 34. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4959677457809448}},
+             1: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.57421875}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5433467626571655}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5166330933570862}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4208669364452362}},
+             'top_1': '49.6,57.4,54.3,51.7,42.1'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.996512697589013}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.761852, ETA Time: 0:23:27.675798
+[INFO: generic_train_loop.py:   45]: Epoch: 35. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9401041865348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.93359375}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6223958134651184}},
+             'top_1': '100.0,100.0,94.0,93.4,62.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.28969669342041}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0035.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 35. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5744707584381104}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5449848771095276}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5173891186714172}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4238911271095276}},
+             'top_1': '49.5,57.4,54.5,51.7,42.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.994586160106044}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.401240, ETA Time: 0:23:12.038789
+[INFO: generic_train_loop.py:   45]: Epoch: 36. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.94921875}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.95703125}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6419270634651184}},
+             'top_1': '100.0,100.0,94.9,95.7,64.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.2351699670155845}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0036.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 36. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4955897033214569}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5763608813285828}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5463709831237793}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5160030126571655}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4259072542190552}},
+             'top_1': '49.6,57.6,54.6,51.6,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.994851366166146}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.313258, ETA Time: 0:22:56.151587
+[INFO: generic_train_loop.py:   45]: Epoch: 37. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.94921875}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9479166865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6315104365348816}},
+             'top_1': '100.0,100.0,94.9,94.8,63.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.2204882303873696}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0037.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 37. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49634575843811035}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5763608813285828}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5457409024238586}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5181451439857483}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4238911271095276}},
+             'top_1': '49.6,57.6,54.6,51.8,42.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.988643046348326}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.578271, ETA Time: 0:22:38.572735
+[INFO: generic_train_loop.py:   45]: Epoch: 38. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9583333134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9557291865348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.640625}},
+             'top_1': '100.0,100.0,95.8,95.6,64.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.184254248936971}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0038.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 38. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49332156777381897}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5761088728904724}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5482611060142517}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5186492204666138}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4259072542190552}},
+             'top_1': '49.3,57.6,54.8,51.9,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.991395973390149}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.141058, ETA Time: 0:22:22.328422
+[INFO: generic_train_loop.py:   45]: Epoch: 39. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9544270634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9583333134651184}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6171875}},
+             'top_1': '100.0,100.0,95.4,95.8,61.7'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.2043919563293457}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0039.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 39. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4955897033214569}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5752268433570862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5483871102333069}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5192792415618896}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4248991906642914}},
+             'top_1': '49.6,57.5,54.8,51.9,42.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.984426075412381}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.310346, ETA Time: 0:22:04.342779
+[INFO: generic_train_loop.py:   45]: Epoch: 40. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.95703125}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9622395634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6341145634651184}},
+             'top_1': '100.0,100.0,95.7,96.2,63.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.203790267308553}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0040.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 40. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5751007795333862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5487651228904724}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5171371102333069}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4248991906642914}},
+             'top_1': '49.5,57.5,54.9,51.7,42.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.99473137240256}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.390439, ETA Time: 0:21:46.653089
+[INFO: generic_train_loop.py:   45]: Epoch: 41. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9557291865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9622395634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6302083134651184}},
+             'top_1': '100.0,100.0,95.6,96.2,63.0'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.1753068765004477}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0041.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 41. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49193549156188965}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5735887289047241}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5168851017951965}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42603325843811035}},
+             'top_1': '49.2,57.4,54.8,51.7,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.005471552571943}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.780315, ETA Time: 0:21:29.836292
+[INFO: generic_train_loop.py:   45]: Epoch: 42. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9505208134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9596354365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6588541865348816}},
+             'top_1': '100.0,100.0,95.1,96.0,65.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.1315619945526123}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0042.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 42. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4925655126571655}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5728326439857483}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5473790168762207}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5170111060142517}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42401713132858276}},
+             'top_1': '49.3,57.3,54.7,51.7,42.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.000152280253749}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.465156, ETA Time: 0:21:12.476053
+[INFO: generic_train_loop.py:   45]: Epoch: 43. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9583333134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9609375}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6393229365348816}},
+             'top_1': '100.0,100.0,95.8,96.1,63.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.1323233445485434}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0043.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 43. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4936996102333069}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5752268433570862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.514868974685669}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42704132199287415}},
+             'top_1': '49.4,57.5,54.8,51.5,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.992241613326534}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.646862, ETA Time: 0:20:55.533563
+[INFO: generic_train_loop.py:   45]: Epoch: 44. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9609375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9700520634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6549479365348816}},
+             'top_1': '100.0,100.0,96.1,97.0,65.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.126962184906006}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0044.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 44. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49294355511665344}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5754788517951965}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5467489957809448}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5154989957809448}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4233871102333069}},
+             'top_1': '49.3,57.5,54.7,51.5,42.3'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.9946547092929965}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.839458, ETA Time: 0:20:38.987007
+[INFO: generic_train_loop.py:   45]: Epoch: 45. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.97265625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9674479365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6627604365348816}},
+             'top_1': '100.0,100.0,97.3,96.7,66.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.0698963403701782}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0045.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 45. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4920614957809448}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5747227668762207}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5464969873428345}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5151209831237793}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42351311445236206}},
+             'top_1': '49.2,57.5,54.6,51.5,42.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.99373992027775}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.685598, ETA Time: 0:20:22.212027
+[INFO: generic_train_loop.py:   45]: Epoch: 46. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9661458134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.96875}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.65625}},
+             'top_1': '100.0,100.0,96.6,96.9,65.6'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.0590657393137612}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0046.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 46. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49546369910240173}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5743447542190552}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5478830933570862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5127268433570862}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42641130089759827}},
+             'top_1': '49.5,57.4,54.8,51.3,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.982488801402431}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.198167, ETA Time: 0:20:06.320121
+[INFO: generic_train_loop.py:   45]: Epoch: 47. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9661458134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6315104365348816}},
+             'top_1': '100.0,100.0,96.6,97.7,63.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.07458758354187}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0047.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 47. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4959677457809448}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5738407373428345}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5471270084381104}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5139868855476379}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4242691397666931}},
+             'top_1': '49.6,57.4,54.7,51.4,42.4'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.976662805003505}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.187254, ETA Time: 0:19:50.398001
+[INFO: generic_train_loop.py:   45]: Epoch: 48. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9583333134651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6627604365348816}},
+             'top_1': '100.0,100.0,95.8,97.1,66.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.08087158203125}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0048.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 48. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49432963132858276}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5722026228904724}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5467489957809448}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5146169066429138}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42464718222618103}},
+             'top_1': '49.4,57.2,54.7,51.5,42.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.985466495636971}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.487379, ETA Time: 0:19:34.921272
+[INFO: generic_train_loop.py:   45]: Epoch: 49. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9609375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9674479365348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6640625}},
+             'top_1': '100.0,100.0,96.1,96.7,66.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.0473061402638755}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0049.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 49. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49395161867141724}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5722026228904724}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.546118974685669}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5171371102333069}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4232610762119293}},
+             'top_1': '49.4,57.2,54.6,51.7,42.3'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.989660762971448}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.562228, ETA Time: 0:19:19.513275
+[INFO: generic_train_loop.py:   45]: Epoch: 50. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9609375}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6692708134651184}},
+             'top_1': '100.0,100.0,96.1,97.7,66.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.0119909048080444}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0050.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 50. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4936996102333069}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5725806355476379}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5486391186714172}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5139868855476379}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.42578125}},
+             'top_1': '49.4,57.3,54.9,51.4,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.983677441074002}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.668062, ETA Time: 0:19:04.209394
+[INFO: generic_train_loop.py:   45]: Epoch: 51. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.96484375}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9739583134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6783854365348816}},
+             'top_1': '100.0,100.0,96.5,97.4,67.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.996451775232951}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0051.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 51. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4964717626571655}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.573462724685669}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5511592626571655}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5142388939857483}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42653730511665344}},
+             'top_1': '49.6,57.3,55.1,51.4,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.977622439784389}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.681397, ETA Time: 0:18:48.870317
+[INFO: generic_train_loop.py:   45]: Epoch: 52. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9674479365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.671875}},
+             'top_1': '100.0,100.0,96.7,97.1,67.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 2.0069462855656943}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0052.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 52. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49495968222618103}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5727066397666931}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5504032373428345}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5166330933570862}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42842742800712585}},
+             'top_1': '49.5,57.3,55.0,51.7,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.985173725312756}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.744829, ETA Time: 0:18:33.563783
+[INFO: generic_train_loop.py:   45]: Epoch: 53. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9700520634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6692708134651184}},
+             'top_1': '100.0,100.0,97.0,97.8,66.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9951277176539104}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0053.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 53. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4940776228904724}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5719506144523621}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5480090975761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5144909024238586}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.4296875}},
+             'top_1': '49.4,57.2,54.8,51.4,43.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.9895321092297955}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.803223, ETA Time: 0:18:18.277894
+[INFO: generic_train_loop.py:   45]: Epoch: 54. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9791666865348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6953125}},
+             'top_1': '100.0,100.0,97.8,97.9,69.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.950005571047465}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0054.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 54. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5720766186714172}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.547631025314331}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5131048560142517}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4288054406642914}},
+             'top_1': '49.5,57.2,54.8,51.3,42.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.988368672709311}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.080124, ETA Time: 0:18:02.038629
+[INFO: generic_train_loop.py:   45]: Epoch: 55. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.97265625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6692708134651184}},
+             'top_1': '100.0,100.0,97.3,97.8,66.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.969606876373291}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0055.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 55. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4926915466785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5713205933570862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5462449789047241}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5143648982048035}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42704132199287415}},
+             'top_1': '49.3,57.1,54.6,51.4,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.992323421662854}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.772105, ETA Time: 0:17:46.635529
+[INFO: generic_train_loop.py:   45]: Epoch: 56. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.98046875}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6783854365348816}},
+             'top_1': '100.0,100.0,97.5,98.0,67.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9560341040293376}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0056.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 56. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4964717626571655}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5771169066429138}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5463709831237793}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5149949789047241}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42464718222618103}},
+             'top_1': '49.6,57.7,54.6,51.5,42.5'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.983586349794941}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.501595, ETA Time: 0:17:30.869550
+[INFO: generic_train_loop.py:   45]: Epoch: 57. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6783854365348816}},
+             'top_1': '100.0,100.0,97.8,98.2,67.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9067367712656658}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0057.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 57. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49445563554763794}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5723286271095276}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5480090975761414}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5157510042190552}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42741936445236206}},
+             'top_1': '49.4,57.2,54.8,51.6,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.990225515057964}
+[INFO: utils.py:   91]: Epoch Time: 0:00:15.627860, ETA Time: 0:17:14.096724
+[INFO: generic_train_loop.py:   45]: Epoch: 58. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.67578125}},
+             'top_1': '100.0,100.0,97.7,97.5,67.6'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9342310825983684}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0058.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 58. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49495968222618103}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5729586482048035}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5473790168762207}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5158770084381104}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4305695593357086}},
+             'top_1': '49.5,57.3,54.7,51.6,43.1'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.995552216806719}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.328769, ETA Time: 0:16:58.124713
+[INFO: generic_train_loop.py:   45]: Epoch: 59. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9739583134651184}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.69921875}},
+             'top_1': '100.0,100.0,97.7,97.4,69.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.924908717473348}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0059.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 59. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4923135042190552}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5715726017951965}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5472530126571655}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5173891186714172}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42855343222618103}},
+             'top_1': '49.2,57.2,54.7,51.7,42.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.004817601173155}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.685480, ETA Time: 0:16:42.515457
+[INFO: generic_train_loop.py:   45]: Epoch: 60. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9791666865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6744791865348816}},
+             'top_1': '100.0,100.0,97.5,97.9,67.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.920135458310445}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0060.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 60. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4925655126571655}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5722026228904724}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5176411271095276}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4262852966785431}},
+             'top_1': '49.3,57.2,54.8,51.8,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 7.006695670466269}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.316123, ETA Time: 0:16:26.494814
+[INFO: generic_train_loop.py:   45]: Epoch: 61. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6848958134651184}},
+             'top_1': '100.0,100.0,97.1,98.2,68.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9087748130162556}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0061.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 61. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5733367204666138}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5472530126571655}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5196572542190552}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4261592626571655}},
+             'top_1': '49.5,57.3,54.7,52.0,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.993832757396083}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.702867, ETA Time: 0:16:10.844887
+[INFO: generic_train_loop.py:   45]: Epoch: 62. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9856770634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6822916865348816}},
+             'top_1': '100.0,100.0,97.1,98.6,68.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8899301290512085}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0062.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 62. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4971018135547638}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5739667415618896}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.547631025314331}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5190272331237793}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4277973771095276}},
+             'top_1': '49.7,57.4,54.8,51.9,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.990183407260526}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.487826, ETA Time: 0:15:54.956357
+[INFO: generic_train_loop.py:   45]: Epoch: 63. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.97265625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9830729365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6822916865348816}},
+             'top_1': '100.0,100.0,97.3,98.3,68.2'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8599990208943684}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0063.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 63. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49672380089759827}},
+             1: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.57421875}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5452368855476379}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5186492204666138}},
+             4: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.42578125}},
+             'top_1': '49.7,57.4,54.5,51.9,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.9724267990358415}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.447039, ETA Time: 0:15:39.011253
+[INFO: generic_train_loop.py:   45]: Epoch: 64. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6848958134651184}},
+             'top_1': '100.0,100.0,97.5,97.5,68.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9212984641393025}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0064.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 64. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4962197542190552}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5748487710952759}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5470010042190552}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5186492204666138}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4271673262119293}},
+             'top_1': '49.6,57.5,54.7,51.9,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.968972952135148}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.182515, ETA Time: 0:15:22.814872
+[INFO: generic_train_loop.py:   45]: Epoch: 65. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9752604365348816}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.98046875}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6705729365348816}},
+             'top_1': '100.0,100.0,97.5,98.0,67.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9151118596394856}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0065.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 65. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49735382199287415}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5763608813285828}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5454888939857483}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5152469873428345}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4295614957809448}},
+             'top_1': '49.7,57.6,54.5,51.5,43.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.969304915397398}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.558949, ETA Time: 0:15:06.943229
+[INFO: generic_train_loop.py:   45]: Epoch: 66. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9830729365348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9830729365348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.6796875}},
+             'top_1': '100.0,100.0,98.3,98.3,68.0'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8690921465555828}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0066.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 66. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4957157373428345}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5758568644523621}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5463709831237793}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5165070295333862}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42855343222618103}},
+             'top_1': '49.6,57.6,54.6,51.7,42.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.9681477315964235}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.398081, ETA Time: 0:14:50.916703
+[INFO: generic_train_loop.py:   45]: Epoch: 67. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9869791865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6966145634651184}},
+             'top_1': '100.0,100.0,97.8,98.7,69.7'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8699621359507244}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0067.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 67. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4965977966785431}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5740927457809448}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5168851017951965}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42993950843811035}},
+             'top_1': '49.7,57.4,54.8,51.7,43.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.973369744516188}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.182672, ETA Time: 0:14:34.705472
+[INFO: generic_train_loop.py:   45]: Epoch: 68. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.98046875}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6848958134651184}},
+             'top_1': '100.0,100.0,98.2,98.0,68.5'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9093778133392334}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0068.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 68. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49546369910240173}},
+             1: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.57421875}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5470010042190552}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5158770084381104}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42792338132858276}},
+             'top_1': '49.5,57.4,54.7,51.6,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.971426179332118}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.217384, ETA Time: 0:14:18.522137
+[INFO: generic_train_loop.py:   45]: Epoch: 69. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9869791865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6731770634651184}},
+             'top_1': '100.0,100.0,97.7,98.7,67.3'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.912641127904256}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0069.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 69. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4955897033214569}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5759828686714172}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5467489957809448}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5147429704666138}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42653730511665344}},
+             'top_1': '49.6,57.6,54.7,51.5,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.977962170877764}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.535781, ETA Time: 0:14:02.577766
+[INFO: generic_train_loop.py:   45]: Epoch: 70. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.98046875}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.68359375}},
+             'top_1': '100.0,100.0,98.2,98.0,68.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8798659642537434}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0070.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 70. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49672380089759827}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5751007795333862}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5483871102333069}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5139868855476379}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4259072542190552}},
+             'top_1': '49.7,57.5,54.8,51.4,42.6'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.98206816950152}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.841309, ETA Time: 0:13:46.839096
+[INFO: generic_train_loop.py:   45]: Epoch: 71. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9869791865348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7083333134651184}},
+             'top_1': '100.0,100.0,97.8,98.7,70.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8705859581629436}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0071.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 71. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49495968222618103}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5757308602333069}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5473790168762207}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5139868855476379}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4277973771095276}},
+             'top_1': '49.5,57.6,54.7,51.4,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.981316435721613}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.876914, ETA Time: 0:13:31.094440
+[INFO: generic_train_loop.py:   45]: Epoch: 72. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9830729365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6861979365348816}},
+             'top_1': '100.0,100.0,97.1,98.3,68.6'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8655385971069336}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0072.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 72. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.49634575843811035}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5764868855476379}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5475050210952759}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5131048560142517}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4281753897666931}},
+             'top_1': '49.6,57.6,54.8,51.3,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.983298017132666}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.063237, ETA Time: 0:13:14.764579
+[INFO: generic_train_loop.py:   45]: Epoch: 73. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9895833134651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6888020634651184}},
+             'top_1': '100.0,100.0,97.8,99.0,68.9'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8643795251846313}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0073.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 73. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4952116906642914}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.577368974685669}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5466229915618896}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5112147331237793}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42704132199287415}},
+             'top_1': '49.5,57.7,54.7,51.1,42.7'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.981407665437268}
+[INFO: utils.py:   91]: Epoch Time: 0:00:16.303280, ETA Time: 0:12:58.599861
+[INFO: generic_train_loop.py:   45]: Epoch: 74. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9713541865348816}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9856770634651184}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.6979166865348816}},
+             'top_1': '100.0,100.0,97.1,98.6,69.8'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8897338310877483}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0074.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 74. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([7936.]), 'val': {'top_1': 0.49609375}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5754788517951965}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5462449789047241}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5127268433570862}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42754536867141724}},
+             'top_1': '49.6,57.5,54.6,51.3,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.981273235813264}
+[INFO: utils.py:   91]: Epoch Time: 0:00:19.863112, ETA Time: 0:12:44.692371
+[INFO: generic_train_loop.py:   45]: Epoch: 75. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.984375}},
+             3: {'sample_count': tensor([768.]), 'val': {'top_1': 0.984375}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7044270634651184}},
+             'top_1': '100.0,100.0,98.4,98.4,70.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8437392711639404}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0075.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 75. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4952116906642914}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5735887289047241}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5459929704666138}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5132308602333069}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4283014237880707}},
+             'top_1': '49.5,57.4,54.6,51.3,42.8'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.978129017737604}
+[INFO: utils.py:   91]: Epoch Time: 0:00:17.293239, ETA Time: 0:12:29.049876
+[INFO: generic_train_loop.py:   45]: Epoch: 76. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9700520634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9791666865348816}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.68359375}},
+             'top_1': '100.0,100.0,97.0,97.9,68.4'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9377288023630779}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0076.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 76. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4959677457809448}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.574974775314331}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5477570295333862}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5141128897666931}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4295614957809448}},
+             'top_1': '49.6,57.5,54.8,51.4,43.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.977664386072466}
+[INFO: utils.py:   91]: Epoch Time: 0:00:17.587800, ETA Time: 0:12:13.538352
+[INFO: generic_train_loop.py:   45]: Epoch: 77. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: {'sample_count': tensor([768.]), 'val': {'top_1': 0.9765625}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9817708134651184}},
+             4: {'sample_count': tensor([768.]), 'val': {'top_1': 0.67578125}},
+             'top_1': '100.0,100.0,97.7,98.2,67.6'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.9108606179555256}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0077.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 77. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5747227668762207}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5487651228904724}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5138608813285828}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.42943549156188965}},
+             'top_1': '49.5,57.5,54.9,51.4,42.9'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.9864911802353395}
+[INFO: utils.py:   91]: Epoch Time: 0:00:17.447897, ETA Time: 0:11:57.892954
+[INFO: generic_train_loop.py:   45]: Epoch: 78. Train Stats
+[INFO: generic_train_loop.py:   47]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             1: {'sample_count': tensor([768.]), 'val': {'top_1': 1.0}},
+             2: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9778645634651184}},
+             3: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.9830729365348816}},
+             4: { 'sample_count': tensor([768.]),
+                  'val': {'top_1': 0.7005208134651184}},
+             'top_1': '100.0,100.0,97.8,98.3,70.1'}}
+[INFO: generic_train_loop.py:   47]: {'name': 'loss', 'value': 1.8400540749231975}
+[INFO: checkpoint.py:   79]: Saved checkpoint: checkpoint_supervised_training_eval_vgg_a_jigsaw-3/model_epoch_0078.pyth
+[INFO: generic_eval_loop.py:   35]: Epoch: 78. Validation Stats
+[INFO: generic_eval_loop.py:   37]: { 'name': 'accuracylist',
+  'num_list': 5,
+  'value': { 0: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4945816397666931}},
+             1: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5738407373428345}},
+             2: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5493951439857483}},
+             3: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.5142388939857483}},
+             4: { 'sample_count': tensor([7936.]),
+                  'val': {'top_1': 0.4301915466785431}},
+             'top_1': '49.5,57.4,54.9,51.4,43.0'}}
+[INFO: generic_eval_loop.py:   37]: {'name': 'loss', 'value': 6.992904578485796}
+[INFO: utils.py:   91]: Epoch Time: 0:00:17.113845, ETA Time: 0:11:42.017181
